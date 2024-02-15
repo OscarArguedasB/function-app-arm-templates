@@ -97,7 +97,6 @@
         "applicationInsightsName": "[parameters('functionAppName')]",
         "storageAccountName": "[format('{0}azfunctions', uniqueString(resourceGroup().id))]",
         "isReserved": "[if(equals(parameters('functionPlanOS'), 'Linux'), true(), false())]",
-        "slotContentShareName": "[format('{0}-{1}', parameters('functionAppName'), parameters('SlotName'))]"
     },
     "resources": [
         {
@@ -169,10 +168,6 @@
                             "value": "[format('DefaultEndpointsProtocol=https;AccountName={0};EndpointSuffix={1};AccountKey={2}', variables('storageAccountName'), environment().suffixes.storage, listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2022-05-01').keys[0].value)]"
                         },
                         {
-                            "name": "WEBSITE_CONTENTSHARE",
-                            "value": "[toLower(parameters('functionAppName'))]"
-                        },
-                        {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
                             "value": "~4"
                         },
@@ -221,10 +216,6 @@
                         {
                             "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
                             "value": "[format('DefaultEndpointsProtocol=https;AccountName={0};EndpointSuffix={1};AccountKey={2}', variables('storageAccountName'), environment().suffixes.storage, listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2022-05-01').keys[0].value)]"
-                        },
-                        {
-                            "name": "WEBSITE_CONTENTSHARE",
-                            "value": "[variables('slotContentShareName')]"
                         },
                         {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
